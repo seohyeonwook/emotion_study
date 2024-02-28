@@ -6,6 +6,7 @@ import { QUILL_MODULES } from "../../constants/quillModules";
 import { useInput, useMaxValueValidateInput } from "../../hooks/inputHook";
 import { useQuillInput } from "../../hooks/quillHook";
 import { useNavigate } from "react-router-dom";
+import { useLoadList } from "../../hooks/boardListHook";
 
 const layout = css`
     display: flex;
@@ -61,16 +62,17 @@ function BoardWrite() {
     const navigate = useNavigate();
     const [ inputValue, handleInputChange ] = useMaxValueValidateInput(10);// 비구조할당 배열 1,2번 찾아서 들어오는거라서 
     const [ quillValue, handleQuillValueChange ] =useQuillInput(); //핸들러를 통해서 quillValue값 받아온다
+    const { boardList, lastId } = useLoadList(); //훅 
 
-    const boardList = useMemo(() => {
-        const IsBoardList = localStorage.getItem("boardList");
-
-        return !IsBoardList?[] : JSON.parse(IsBoardList);//localStorage에 값이 있으면 빈배열
-    }, []);
+    // const boardList = useMemo(() => {
+    //     const IsBoardList = localStorage.getItem("boardList");
+    //     return !IsBoardList?[] : JSON.parse(IsBoardList);//localStorage에 값이 있으면 빈배열
+    // }, []);// 훅으로 빼자 계속 사용하니까
 
     const handleSubmitClick = () => {
-        const lastIndex = boardList.length -1;
-        const lastId = lastIndex < 0 ? 0 : boardList[lastIndex].boardId;//boardList 제일마지막에 있는  boardId 꺼내온다
+    //     const lastIndex = boardList.length -1;
+    //     const lastId = lastIndex < 0 ? 0 : boardList[lastIndex].boardId;//boardList 제일마지막에 있는  boardId 꺼내온다 
+    //     훅으로 뻄
         
         const board = { // 매개변수 board 의 값 가지고온다
             boardId: lastId + 1,
