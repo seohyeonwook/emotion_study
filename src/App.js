@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import { Reset } from 'styled-reset';
+import SideBar from './components/SideBar/SideBar';
+import SideBarTop from './components/SideBarTop/SideBarTop';
+import RootLayout from './components/RootLayout/RootLayout';
+import { MENUS } from './constants/menu';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Reset />
+      <SideBar />
+      <SideBarTop />
+      <RootLayout>
+        <Routes>
+          {MENUS.map(menu => <Route key={menu.id} path={menu.path} element={menu.element} />)}
+        </Routes>
+      </RootLayout>
+      
+    </>
   );
 }
 
