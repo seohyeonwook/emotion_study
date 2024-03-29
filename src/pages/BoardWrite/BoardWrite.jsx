@@ -60,7 +60,7 @@ function BoardWrite() {
     //     boardContent: ""
     // });
     const navigate = useNavigate();
-    const [ inputValue, handleInputChange ] = useMaxValueValidateInput(10);// 비구조할당 배열 1,2번 찾아서 들어오는거라서 
+    const [ inputValue, handleInputChange ] = useMaxValueValidateInput(20);// 비구조할당 배열 1,2번 찾아서 들어오는거라서 
     const [ quillValue, handleQuillValueChange ] =useQuillInput(); //핸들러를 통해서 quillValue값 받아온다
     const { boardList, lastId } = useLoadList(); //훅 
 
@@ -70,18 +70,24 @@ function BoardWrite() {
     // }, []);// 훅으로 빼자 계속 사용하니까
 
     const handleSubmitClick = () => {
-    //     const lastIndex = boardList.length -1;
-    //     const lastId = lastIndex < 0 ? 0 : boardList[lastIndex].boardId;//boardList 제일마지막에 있는  boardId 꺼내온다 
-    //     훅으로 뻄
+        //     const lastIndex = boardList.length -1;
+        //     const lastId = lastIndex < 0 ? 0 : boardList[lastIndex].boardId;//boardList 제일마지막에 있는  boardId 꺼내온다 
+        //     훅으로 뻄
+        let newBoardList =[];
+        for(let i = 0; i < 203; i++) {
+       
+                const board ={
+                    boardId: i + 1,
+                    boardTitle: inputValue + (i + 1),
+                    boardContent: quillValue
+                }
+                newBoardList = [...newBoardList, board];
+            }
+            
         
-        const board = { // 매개변수 board 의 값 가지고온다
-            boardId: lastId + 1,
-            boardTitle: inputValue,
-            boardContent: quillValue
-        };
 
-        const newBoardLIst = [...boardList, board];//기존 보더리스트에 board 추가해서 뉴 만든다음에
-        localStorage.setItem("boardList", JSON.stringify(newBoardLIst));// 뉴를 로컬에 추가한다
+        // const newBoardLIst = [...boardList, board];//기존 보더리스트에 board 추가해서 뉴 만든다음에
+        localStorage.setItem("boardList", JSON.stringify(newBoardList));// 뉴를 로컬에 추가한다
         alert("글 작성 완료.");
         navigate("/board/list");
         
